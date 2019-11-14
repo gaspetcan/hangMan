@@ -60,10 +60,10 @@ class hangman extends React.Component {
         //Aynı harf geldiğinde yanlış olduğunu kontrol etme
 
         for(var i=0;i<kelimeTemp.length;i++){
-            if(kelimeTahmin[i] != kelimeTemp[i])
+            if(kelimeTemp[i] != kelimeTahmin[i])
                 console.log(kelimeTemp.length)
-                //?
-                kelimeTemp.splice(1, i, kelimeTahmin[i])
+                //? Sayfa yenileniyor
+                kelimeTemp.splice(i, 1, kelimeTahmin[i]);
         }
         this.setState({
                 bos:kelimeTemp
