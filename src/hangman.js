@@ -45,19 +45,29 @@ class hangman extends React.Component {
     }
 
     handleSubmit(event) {
+        //Verilen Harf ile kelime içerisindeki harfleri Karşılaştırma
         var kelime = this.state.kelime;
-        var harflereAyır = kelime.split("");
-        var harfTahmin = "";
-        harflereAyır.forEach((elem)=>{
-            if(elem == this.state.deger)
-                harfTahmin += elem;
+        var kelimedekiHarfler = kelime.split("");
+        var kelimeTahmin = "";
+        var kelimeTemp = this.state.bos;
+        kelimedekiHarfler.forEach((harf)=>{
+            if(harf == this.state.deger)
+                kelimeTahmin += harf;
             else
-                harfTahmin += "*";
+                kelimeTahmin += "*";
         })
-        const tempKelime = harfTahmin
+        //Geçiçi kelime ile asıl kelimeyi karşılaştırma
+        //Aynı harf geldiğinde yanlış olduğunu kontrol etme
+
+        for(var i=0;i<kelimeTemp.length;i++){
+            if(kelimeTahmin[i] != kelimeTemp[i])
+                console.log(kelimeTemp.length)
+                //?
+                kelimeTemp.splice(1, i, kelimeTahmin[i])
+        }
         this.setState({
-            bos: tempKelime
-        })
+                bos:kelimeTemp
+            })
         event.preventDefault();
     }
 
