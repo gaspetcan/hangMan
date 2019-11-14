@@ -6,41 +6,77 @@ class hangman extends React.Component {
         this.state={
             kelime: "",
             harfler: "",
+            bos : "",
             deger: "",
         }
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
 
     gameOn = () => {
         const meyveler = [
-            "Elma",
-            "Armut",
-            "Ananas",
-            "Çilek",
-            "Muz"
+            "elma",
+            "armut",
+            "ananas",
+            "çilek",
+            "muz"
         ]
-        var sKelime = meyveler[Math.floor(Math.random()*meyveler.length)];
-        var harfS = "";
-        var harfL = sKelime.split("");
-        for(var i=0; i< sKelime.length; i++)
+        //Random Kelime bul meyveler arrayi içerisinden
+        var randomKelime = meyveler[Math.floor(Math.random()*meyveler.length)];
+        //Kaç harf olduğunu sapta
+        var harflereAyır = randomKelime.split("");
+        //Default state için kac haften oluştuysa bunu boş kutucuklar halinde göster
+        var bosKelime = "";
+        //Harf sayısına göre boşluk doldur
+        for(var i=0; i< randomKelime.length; i++)
         {
-            harfS = harfS + "_ ";    
+            bosKelime = bosKelime + "*";
         }
+
         this.setState({
-            kelime: harfS,
-            harfler: harfL,
+            bos : bosKelime,
+            kelime: randomKelime,
+            harfler: harflereAyır
         })
     }
 
-    handleChange(event) {   
+    handleChange(event) {
         this.setState({deger: event.target.value});
     }
-    
+
+    handleSubmit(event) {
+        var kelime = this.state.kelime;
+        var harflereAyır = kelime.split("");
+        var harfTahmin = "";
+        harflereAyır.forEach((elem)=>{
+            if(elem == this.state.deger)
+                harfTahmin += elem;
+            else
+                harfTahmin += "*";
+        })
+        const tempKelime = harfTahmin
+        this.setState({
+            bos: tempKelime
+        })
+        event.preventDefault();
+    }
+
     render(){
         return (
             <div className="App">
-                <h1>{this.state.harfler}</h1>
-                <input type="text" value={this.state.value} onChange={this.handleChange} />
-                <button onClick={this.gameOn}>Start</button>
+                <button onClick={this.gameOn}>Kelime Üret</button>
+
+                <div>
+                    <h1>{this.state.bos}</h1>
+                    <form onSubmit={this.handleSubmit}>
+                        <label>
+                            Tahmin
+                            <input type="text" value={this.state.value} onChange={this.handleChange} maxLength="1"/>
+                        </label>
+                        <input type="submit" value="onayla"/>
+                    </form>
+                </div>
+
             </div>
     );    
 }    
