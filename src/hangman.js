@@ -8,7 +8,8 @@ class hangman extends React.Component {
             harfler: "",
             bos : "",
             deger: "",
-            tempKelime: "",
+            kalanHak: 7,
+            gText:""
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -47,22 +48,48 @@ class hangman extends React.Component {
 
     handleSubmit(event) {
         //Verilen Harf ile kelime içerisindeki harfleri Karşılaştırma
-
-        console.log(typeof this.state.bos)
-
         var kelimedekiHarfler = this.state.kelime.split("");
         var kutucuklar = this.state.bos.split("");
+        var dogruYanlıs = false;
+        var kalanHakSayısı = this.state.kalanHak;
+
         for (var i=0;i<kelimedekiHarfler.length;i++)
         {
             if(kelimedekiHarfler[i] == this.state.deger)
             {
-
-                kutucuklar[i] = kelimedekiHarfler[i]
+                kutucuklar[i] = kelimedekiHarfler[i];
+                dogruYanlıs = true;
             }
         }
 
+        //Verilen Harf doğru ve ya yanlış ise skora nasıl yansıyacağı
+        if(!dogruYanlıs)
+        {
+            kalanHakSayısı = kalanHakSayısı -1
+        }
+
+        //Hiç kutucuk kalmadıysa
+        var gameText = "";
+        //Yıldız kalmamış demektir
+        var kutucukKalmadıysa = kutucuklar.filter((kutu) => {
+            return kutu != "*";
+        })
+
+        //Yada Can kalmamış olmalı
+        if(kalanHakSayısı == 0){
+            gameText = "You Lose"
+        }
+
+        //O zaman bu uzunluklar eşit olmalı
+        if(kelimedekiHarfler.length == kutucukKalmadıysa.length)
+        {
+            gameText = "You Win"
+        }
+
         this.setState({
-                bos: kutucuklar.join('')
+                bos: kutucuklar.join(''),
+                kalanHak: kalanHakSayısı,
+                gText: gameText,
             });
 
         event.preventDefault();
@@ -72,16 +99,20 @@ class hangman extends React.Component {
         return (
             <div className="App">
                 <button onClick={this.gameOn}>Kelime Üret</button>
-
-                <div>
-                    <h1>{this.state.bos}</h1>
-                        <label>
-                            Tahmin
-                            <input type="text" value={this.state.value} onChange={this.handleChange} maxLength="1"/>
-                        </label>
-                        <button type="button" onClick={this.handleSubmit}>Onayla</button>
-                </div>
-
+                {(this.state.kalanHak > 0) ?
+                        <div>
+                            <h1>{this.state.bos}</h1>
+                            <h1>{this.state.kalanHak}</h1>
+                            <label>
+                                <input type="text" value={this.state.value} onChange={this.handleChange} maxLength="1"/>
+                            </label>
+                            <button type="button" onClick={this.handleSubmit}>Onayla</button>
+                        </div>
+                        :
+                        <div>
+                            <h1>{this.state.gText}</h1>
+                        </div>
+                    }
             </div>
         );
     }
