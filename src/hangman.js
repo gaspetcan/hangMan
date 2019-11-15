@@ -8,6 +8,7 @@ class hangman extends React.Component {
             harfler: "",
             bos : "",
             deger: "",
+            tempKelime: "",
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -46,28 +47,24 @@ class hangman extends React.Component {
 
     handleSubmit(event) {
         //Verilen Harf ile kelime içerisindeki harfleri Karşılaştırma
-        var kelime = this.state.kelime;
-        var kelimedekiHarfler = kelime.split("");
-        var kelimeTahmin = "";
-        var kelimeTemp = this.state.bos;
-        kelimedekiHarfler.forEach((harf)=>{
-            if(harf == this.state.deger)
-                kelimeTahmin += harf;
-            else
-                kelimeTahmin += "*";
-        })
-        //Geçiçi kelime ile asıl kelimeyi karşılaştırma
-        //Aynı harf geldiğinde yanlış olduğunu kontrol etme
 
-        for(var i=0;i<kelimeTemp.length;i++){
-            if(kelimeTemp[i] != kelimeTahmin[i])
-                console.log(kelimeTemp.length)
-                //? Sayfa yenileniyor
-                kelimeTemp.splice(i, 1, kelimeTahmin[i]);
+        console.log(typeof this.state.bos)
+
+        var kelimedekiHarfler = this.state.kelime.split("");
+        var kutucuklar = this.state.bos.split("");
+        for (var i=0;i<kelimedekiHarfler.length;i++)
+        {
+            if(kelimedekiHarfler[i] == this.state.deger)
+            {
+
+                kutucuklar[i] = kelimedekiHarfler[i]
+            }
         }
+
         this.setState({
-                bos:kelimeTemp
-            })
+                bos: kutucuklar.join('')
+            });
+
         event.preventDefault();
     }
 
@@ -78,18 +75,16 @@ class hangman extends React.Component {
 
                 <div>
                     <h1>{this.state.bos}</h1>
-                    <form onSubmit={this.handleSubmit}>
                         <label>
                             Tahmin
                             <input type="text" value={this.state.value} onChange={this.handleChange} maxLength="1"/>
                         </label>
-                        <input type="submit" value="onayla"/>
-                    </form>
+                        <button type="button" onClick={this.handleSubmit}>Onayla</button>
                 </div>
 
             </div>
-    );    
-}    
+        );
+    }
 }
 
 export default hangman;
