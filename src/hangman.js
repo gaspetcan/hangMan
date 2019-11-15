@@ -9,7 +9,8 @@ class hangman extends React.Component {
             bos : "",
             deger: "",
             kalanHak: 7,
-            gText:""
+            gText:"",
+            gWin: false,
         }
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -52,6 +53,7 @@ class hangman extends React.Component {
         var kutucuklar = this.state.bos.split("");
         var dogruYanlıs = false;
         var kalanHakSayısı = this.state.kalanHak;
+        var winState = false;
 
         for (var i=0;i<kelimedekiHarfler.length;i++)
         {
@@ -83,6 +85,11 @@ class hangman extends React.Component {
         //O zaman bu uzunluklar eşit olmalı
         if(kelimedekiHarfler.length == kutucukKalmadıysa.length)
         {
+            winState = true;
+        }
+
+        if(winState)
+        {
             gameText = "You Win"
         }
 
@@ -90,6 +97,7 @@ class hangman extends React.Component {
                 bos: kutucuklar.join(''),
                 kalanHak: kalanHakSayısı,
                 gText: gameText,
+                gWin: winState
             });
 
         event.preventDefault();
@@ -99,7 +107,7 @@ class hangman extends React.Component {
         return (
             <div className="App">
                 <button onClick={this.gameOn}>Kelime Üret</button>
-                {(this.state.kalanHak > 0) ?
+                {(this.state.kalanHak > 0 && !this.state.gWin) ?
                         <div>
                             <h1>{this.state.bos}</h1>
                             <h1>{this.state.kalanHak}</h1>
