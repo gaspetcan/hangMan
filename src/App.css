@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  font-family: 'Pacifico', cursive;
+  margin:20px;
 }
 
 .App-logo {
@@ -15,6 +17,26 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: #FFFFFF;
+  padding: 10px 16px;
+  text-align: right;
+  transition-duration: 0.4s;
+  text-decoration: none;
+  font-size:32px;
+  cursor:pointer;
+  font-family: 'Pacifico', cursive;
+}
+
+input {
+  font-size:32px;
+  font-family: 'Pacifico', cursive;
+  width: 50px;
+  height: 70px;
 }
 
 .App-link {

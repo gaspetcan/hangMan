@@ -36,11 +36,16 @@ class hangman extends React.Component {
             bosKelime = bosKelime + "*";
         }
 
+        //Restart 
         this.setState({
             bos : bosKelime,
             kelime: randomKelime,
-            harfler: harflereAyır
+            harfler: harflereAyır,
+            kalanHak : 7,
+            gWin : false
         })
+
+
     }
 
     handleChange(event) {
@@ -106,11 +111,15 @@ class hangman extends React.Component {
     render(){
         return (
             <div className="App">
-                <button onClick={this.gameOn}>Kelime Üret</button>
+                <div>
+                <button onClick={this.gameOn}>Başla </button>
+                </div>
+                <div>
+                <img src={`./${this.state.kalanHak}.png`}></img>
+                </div>
                 {(this.state.kalanHak > 0 && !this.state.gWin) ?
                         <div>
                             <h1>{this.state.bos}</h1>
-                            <h1>{this.state.kalanHak}</h1>
                             <label>
                                 <input type="text" value={this.state.value} onChange={this.handleChange} maxLength="1"/>
                             </label>
