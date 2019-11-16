@@ -112,24 +112,31 @@ class hangman extends React.Component {
         return (
             <div className="App">
                 <div>
-                <button onClick={this.gameOn}>Başla </button>
+                    <h1>The Hangman</h1>
                 </div>
+                
                 <div>
-                <img src={`./${this.state.kalanHak}.png`}></img>
-                </div>
-                {(this.state.kalanHak > 0 && !this.state.gWin) ?
-                        <div>
-                            <h1>{this.state.bos}</h1>
-                            <label>
-                                <input type="text" value={this.state.value} onChange={this.handleChange} maxLength="1"/>
-                            </label>
-                            <button type="button" onClick={this.handleSubmit}>Onayla</button>
-                        </div>
-                        :
-                        <div>
-                            <h1>{this.state.gText}</h1>
-                        </div>
-                    }
+                    <button onClick={this.gameOn}>Başla </button>
+               </div>
+        
+                <div>
+                    <div className="right"> 
+                    <img src={`./${this.state.kalanHak}.png`}></img>
+                    </div>
+                    {(this.state.kalanHak > 0 && !this.state.gWin) ?
+                            <div className="left">
+                                <h1>{this.state.bos}</h1>
+                                <label>
+                                    <input type="text" value={this.state.value} onChange={this.handleChange} maxLength="1"/>
+                                </label>
+                                <button type="button" onClick={this.handleSubmit}>Onayla</button>
+                            </div>
+                            :
+                            <div className="left">
+                                <h1>{this.state.gText}</h1>
+                            </div>
+                        }
+                    </div>
             </div>
         );
     }

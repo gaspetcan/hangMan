@@ -42,3 +42,13 @@ input {
 .App-link {
   color: #09d3ac;
 }
+
+.left{
+  float: left;
+  padding-left:10%;
+}
+
+.right{
+  float:right;
+  padding-right:10%
+}
